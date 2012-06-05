@@ -1,0 +1,9 @@
+#!/bin/sh
+echo list files
+python list_files.py
+echo process Yafee
+yaafe -c $1 -r 44100 -i dirs.txt -b ./data
+echo clean data
+python treat_data.py dirs.txt $1
+echo remove useless files
+rm -R ./data/*

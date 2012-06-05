@@ -1,0 +1,11 @@
+#!/bin/sh
+python list_files.py
+while read line
+do
+echo $line > tmp
+cat tmp
+YAAFE_PATH=/usr/local/yaafe_extensions LD_LIBRARY_PATH=/usr/local/lib PYTHONPATH=/usr/local/python_packages yaafe.py -c $1 -r 44100 -i tmp -b ./data
+python treat_data.py tmp $1
+rm -R ./data/*
+rm tmp
+done < dirs.txt
