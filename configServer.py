@@ -50,6 +50,8 @@ class cfg_server:
 		
 	def reset(self):
 		"""Reset Gherkin to Default configuration"""
+		ad = os.path.abspath( __file__ )
+
 		self.config.add_section('extension')
 		self.config.set('extension', 'file', json.dumps([".mp3", ".ogg", ".flac"]))
 		self.config.set('extension', 'tag', json.dumps(["artist", "album", "title", "date", "tracknumber", "genre"]))
@@ -72,22 +74,21 @@ class cfg_server:
 		self.config.set('pruning', 'constante', '0.001')
 
 		self.config.add_section('location')
-		ad = os.path.abspath( __file__ )
-		self.config.set('location', 'root', ad[:len(ad) - len( __file__ )])
-		self.config.set('location', 'log', '%(root)log/')
-		self.config.set('location', 'DbLoc', '%(root)')
+		self.config.set('location', 'root', ad.rsplit('/',1)[0] + '/' )
+		self.config.set('location', 'log', '%(root)slog/')
+		self.config.set('location', 'DbLoc', '%(root)s')
 		self.config.set('location', 'Markov', 'dbMarkov.ghk')
 		self.config.set('location', 'DbFile', 'db.xml')
-    
-    	def set(self, section, name, value):
-        	"""Modify constant in file and in instance"""
-            	self.config.set(section, name, value)
-        	self.write()
-        	self.__init__(self.fileName)
+
+	def set(self, section, name, value):
+		"""Modify constant in file and in instance"""
+		self.config.set(section, name, value)
+		self.write()
+		self.__init__(self.fileName)
 
 	def write(self):
-	    """Write the actual configuration in the file "name" """
-	    with open(self.fileName, 'wb') as configfile:
-		self.config.write(configfile)
+		"""Write the actual configuration in the file "name" """
+		with open(self.fileName, 'wb') as configfile:
+			self.config.write(configfile)
 
 config = cfg_server('configServer.cfg')
