@@ -1,5 +1,6 @@
 import ConfigParser
 import json
+import os
 
 class cfg_server:
 	def __init__(self, fileName):
@@ -36,9 +37,10 @@ class cfg_server:
 			self.epsilon = self.config.getfloat('pruning','constante')
 
 			#icon and locations
+			self.root = self.config.get('location','root')
 			self.dbMarkov = self.config.get('location','Markov')
-			self.logLocation = self.config.get('location','log')
-			self.defaultDbLocation = self.config.get('location','DbLoc')
+			self.logLocation = self.config.get('location','log',0)
+			self.defaultDbLocation = self.config.get('location','DbLoc',0)
 			self.defaultDbFile = self.config.get('location','DbFile')
 		except:
 			#if no file was created, creates it
@@ -70,9 +72,11 @@ class cfg_server:
 		self.config.set('pruning', 'constante', '0.001')
 
 		self.config.add_section('location')
+		ad = os.path.abspath( __file__ )
+		self.config.set('location', 'root', ad[:len(ad) - len( __file__ )])
+		self.config.set('location', 'log', '%(root)log/')
+		self.config.set('location', 'DbLoc', '%(root)')
 		self.config.set('location', 'Markov', 'dbMarkov.ghk')
-		self.config.set('location', 'log', 'log/')
-		self.config.set('location', 'DbLoc', './')
 		self.config.set('location', 'DbFile', 'db.xml')
     
     	def set(self, section, name, value):

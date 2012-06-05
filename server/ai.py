@@ -114,6 +114,9 @@ class ai:
     def get_lib(self):
         (a, b, self.songs) = get_lib()
         self.lastUpdate = time()
+
+    def get_root(self):
+	return config.root
         
 #----------------------------
 #setters
