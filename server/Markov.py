@@ -1,4 +1,5 @@
 import random
+from configServer import *
 
 class Markovienne():
 
@@ -13,7 +14,7 @@ class Markovienne():
 
     def create_Markov(self, songList):
         """Creer un fichier .ghk avec les proba de transition"""
-        file = open(self.dbName, 'w')        
+        file = open(config.root + self.dbName, 'w')        
         for i in songList:
             self.markov[i] = {}
             self.number[i] = 1.0
@@ -27,7 +28,7 @@ class Markovienne():
     def load_Markov(self, fileName):
         """ Charge le fichier .ghk contenant les probas de transition"""
         self.dbName = fileName
-        file = open(self.dbName, 'r')
+        file = open(config.root + self.dbName, 'r')
         for line in file:
             u = line.split('$')
 	    try:
@@ -40,7 +41,7 @@ class Markovienne():
 
     def save_Markov(self):
         """ Sauvegarde les donnees"""
-        file = open(self.dbName, 'w')
+        file = open(config.root + self.dbName, 'w')
         for i in self.markov.keys():
             for j in self.markov[i].keys():
                 file.write(str(i) + "$" + str(j) + "$" + str(self.markov[i][j])+ '$' + str(self.number[i])+ '$')

@@ -3,11 +3,13 @@
 
 #adding path of audio player to the lib
 import sys
-if 'server/' not in sys.path:
-    sys.path.append('server/')
+from configServer import *
 
-if 'db-tools/' not in sys.path:
-    sys.path.append('db-tools/')
+if config.root + 'server/' not in sys.path:
+    sys.path.append(config.root + 'server/')
+
+if config.root + 'db-tools/' not in sys.path:
+    sys.path.append(config.root + 'db-tools/')
 
 
 #running server

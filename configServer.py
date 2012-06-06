@@ -2,6 +2,9 @@ import ConfigParser
 import json
 import os
 
+ad = os.path.abspath( __file__ )
+ad = ad.rsplit('/', 1)[0] +'/'
+
 class cfg_server:
 	def __init__(self, fileName):
 		self.fileName = fileName		
@@ -50,8 +53,6 @@ class cfg_server:
 		
 	def reset(self):
 		"""Reset Gherkin to Default configuration"""
-		ad = os.path.abspath( __file__ )
-
 		self.config.add_section('extension')
 		self.config.set('extension', 'file', json.dumps([".mp3", ".ogg", ".flac"]))
 		self.config.set('extension', 'tag', json.dumps(["artist", "album", "title", "date", "tracknumber", "genre"]))
@@ -74,7 +75,7 @@ class cfg_server:
 		self.config.set('pruning', 'constante', '0.001')
 
 		self.config.add_section('location')
-		self.config.set('location', 'root', ad.rsplit('/',1)[0] + '/' )
+		self.config.set('location', 'root', ad)
 		self.config.set('location', 'log', '%(root)slog/')
 		self.config.set('location', 'DbLoc', '%(root)s')
 		self.config.set('location', 'Markov', 'dbMarkov.ghk')
@@ -88,7 +89,7 @@ class cfg_server:
 
 	def write(self):
 		"""Write the actual configuration in the file "name" """
-		with open(self.fileName, 'wb') as configfile:
+		with open(self.root + self.fileName, 'wb') as configfile:
 			self.config.write(configfile)
 
-config = cfg_server('configServer.cfg')
+config = cfg_server(ad + 'configServer.cfg')
