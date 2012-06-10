@@ -89,7 +89,7 @@ class cfg_server:
 
 	def write(self):
 		"""Write the actual configuration in the file "name" """
-		with open(self.root + self.fileName, 'wb') as configfile:
+		with open(self.fileName, 'wb') as configfile:
 			self.config.write(configfile)
 
 config = cfg_server(ad + 'configServer.cfg')
