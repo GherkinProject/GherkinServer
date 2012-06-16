@@ -3,10 +3,11 @@
 
 #adding path of audio player to the lib
 import sys
+from config import *
 
 #working on the database here
-if 'db-tools/' not in sys.path:
-    sys.path.append('db-tools/')
+if confit.root + 'db-tools/' not in sys.path:
+    sys.path.append(config.root + 'db-tools/')
 
 #running server
 import create_db
