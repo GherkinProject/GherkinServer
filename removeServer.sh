@@ -4,20 +4,29 @@ defaultScript=`readlink -f $defaultStarter`
 dir=${defaultScript%/*}
 
 echo "Found directory in $dir"
-echo "Removing..."
+
+echo -n "Are you sure you want to remove this entire directory ? (y/n) "
+read answer
+
+if [ $answer = "y" ]
+then
+    echo "Removing..."
 
 #All files
-if [ -d "$dir" ] || [ ! -z $dir ]
-then
-    rm -R $dir
-    echo "Files"
-fi
+    if [ -d "$dir" ] || [ ! -z "$dir" ] || [ "$dir" != "${defaultScript%/*}" ]
+    then
+        rm -R $dir
+        echo "Files"
+    fi
 
 #Links
-if [ -h "$defaultStarter" ]
-then
-    rm $defaultStarter
-    echo "Link"
-fi
+    if [ -h "$defaultStarter" ]
+    then
+        rm $defaultStarter
+        echo "Link"
+    fi
 
-echo "Done"
+    echo "Done"
+else
+    echo "Aborting"
+fi
