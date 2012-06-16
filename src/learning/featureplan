@@ -1,0 +1,6 @@
+sf: SpectralFlux blockSize=1024 stepSize=2560
+sr: SpectralRolloff blockSize=1024 stepSize=2560
+zcr: ZCR blockSize=1024  stepSize=2560
+mfcc: MFCC blockSize=1024 stepSize=2560 CepsNbCoeffs=7
+sss: SpectralShapeStatistics blockSize=1024 stepSize=2560
+am: AmplitudeModulation blockSize=30720 stepSize=15360
