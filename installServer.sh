@@ -16,6 +16,5 @@ fi
 echo "Creating and copying files"
 mkdir $dir
 cp -R src/* $dir/
-echo $USER
 chown -R $USER $dir
 ln -s $dir/start_server.py /usr/local/bin/ghk-server
