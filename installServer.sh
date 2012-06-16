@@ -13,8 +13,26 @@ else
     dir=$defaultDir
 fi
 
-echo "Creating and copying files"
-mkdir $dir
-cp -R src/* $dir/
-chown -R $USER $dir
-ln -s $dir/start_server.py /usr/local/bin/ghk-server
+echo "Creating and copying files..."
+
+#All files
+if [ ! -d "$dir" ]
+then
+    mkdir -p $dir
+    cp -R src/* $dir/
+    echo "Copying files"
+else
+    echo "Application already installed"
+fi
+
+#Links
+if [ ! -h /usr/local/bin/ghk-server ]
+then
+    mkdir -p /usr/local/bin
+    ln -s $dir/start_server.py /usr/local/bin/ghk-server
+    echo "Creating link"
+else
+    echo "Link already existing"
+fi
+
+echo "Done"
