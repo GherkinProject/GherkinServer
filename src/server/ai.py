@@ -71,7 +71,7 @@ class ai:
             return None
     
     def get_db(self):
-        with open(config.defaultDbLocation + config.defaultDbFile, "rb") as handle:
+        with open(config.userLoc + config.defaultDbFile, "rb") as handle:
             return xmlrpclib.Binary(handle.read())
 
     def get_mode(self):
@@ -270,6 +270,7 @@ running.setDaemon(True)
 running.start()
 
 # Create server
+log.debug("Server listening at address " + config.serverName + " : " + str(config.defaultPort))
 s = SimpleXMLRPCServer((config.serverName, config.defaultPort), logRequests = False, allow_none=True)
 s.register_instance(server)
 

@@ -114,8 +114,10 @@ def update_xml_db(directory, lastUpdate = [0], tagKept = config.defaultTagKept, 
     doc = minidom.parse(dbLocation + dbFile)
     
     #removing xml before creating the next
-    os.remove(dbLocation + dbFile)
-
+    try:
+        os.remove(dbLocation + dbFile)
+    except:
+        log.debug("update db: cannot remove db file")
     #creating doc
     root = doc.documentElement
     
@@ -183,5 +185,4 @@ def thread_create_db(directory):
 def thread_that(function, arguments):
     """Explicit name"""
     running = Thread(target = function, args = arguments)
-    running.setDaemon(True)
     running.start()
