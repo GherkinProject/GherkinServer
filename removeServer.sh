@@ -13,7 +13,7 @@ then
     echo "Removing..."
 
 #All files
-    if [ -d "$dir" ] || [ ! -z "$dir" ] || [ "$dir" != "${defaultScript%/*}" ]
+    if [ -d "$dir" ] && [ ! -z "$dir" ] && [ "$dir" != "${defaultScript%/*}" ]
     then
         rm -R $dir
         echo "Files"
