@@ -58,6 +58,7 @@ encoding="UTF-8"
 def gen_xml_db(directory, tagKept = config.defaultTagKept, fileExt = config.defaultFileExt, dbLocation = config.defaultDbLocation, dbFile = config.defaultDbFile):
     """create xml database (location : dbLocation) with tag in tagKept, for the files in the directory with the extension in defaultFileExt"""
     if(directory == ""):
+        log.error("create db: Bad directory given")
         return False
     
     doc = Document()
@@ -86,7 +87,7 @@ def gen_xml_db(directory, tagKept = config.defaultTagKept, fileExt = config.defa
                         tag[i].setAttribute('value', audio[i][0].encode("utf-8"))
                         block.appendChild(tag[i])
                 except:
-                    log.debug("Bad file encoding : " + fileLocation)
+                    log.debug("create db: Bad file encoding : " + fileLocation)
     
     #writing the result into "db.xml" (defaultpath)
     try:
@@ -94,10 +95,10 @@ def gen_xml_db(directory, tagKept = config.defaultTagKept, fileExt = config.defa
         doc.writexml(db, indent = indent, newl = newl)
         db.close()
     except:
-        log.error("Problem writing database")
+        log.error("create db: Problem writing database")
         return False
     else:
-        log.info("Database created at " + dbLocation)
+        log.info("create db: Database created at " + dbLocation)
         return True
 
 
@@ -105,8 +106,11 @@ def gen_xml_db(directory, tagKept = config.defaultTagKept, fileExt = config.defa
 def update_xml_db(directory, lastUpdate = [0], tagKept = config.defaultTagKept, fileExt = config.defaultFileExt, dbLocation = config.defaultDbLocation, dbFile = config.defaultDbFile):
     """create xml database (location : dbLocation) with tag in tagKept, for the files in the directory with the extension in defaultFileExt"""
     if(directory == ""):
+        log.error("update db: Bad directory given")
         return False
-     
+    
+    log.debug("update db: Beginning to scan files")
+ 
     doc = minidom.parse(dbLocation + dbFile)
     
     #removing xml before creating the next
@@ -143,14 +147,9 @@ def update_xml_db(directory, lastUpdate = [0], tagKept = config.defaultTagKept, 
                         tag[i].setAttribute('value', audio[i][0].encode("utf-8"))
                         block.appendChild(tag[i])
                 except:
-                    log.debug("Bad file encoding : " + fileLocation)
+                    log.debug("update db: Bad file encoding : " + fileLocation)
 
-    #writing the result into "db.xml" (defaultpath)
     try:
-        #pretreatment
-        #prettyXML = doc.toprettyxml(indent, newl, encoding)
-        #prettyXML= prettyXML.replace('><','>\n<')
-        
         #Removes all TEXT_NODES in parameter nodes
         for node in root.childNodes:
             if node.nodeType == node.TEXT_NODE:
@@ -166,10 +165,10 @@ def update_xml_db(directory, lastUpdate = [0], tagKept = config.defaultTagKept, 
         doc.writexml(db, indent = indent, newl = newl)
         db.close()
     except:
-        log.error("Problem writing during updating database")
+        log.error("update db: Problem writing during updating database")
         return False
     else:
-        log.info("Database updated at " + dbLocation)
+        log.info("update db: Database updated at " + dbLocation)
         lastUpdate[0] = time()
         return True
 

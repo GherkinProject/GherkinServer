@@ -105,8 +105,7 @@ class ai:
 
     def update_db(self, path):
         """Update the db according to the given path"""
-        #cfgParse.set('location','DbLoc', %(path)s)
-        create_db.thread_update_db(path, self.lastUpdate)
+        create_db.thread_update_db(path)
 
     def thread_update_db(self):
         pass
