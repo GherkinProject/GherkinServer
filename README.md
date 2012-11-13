@@ -12,11 +12,11 @@ Before the installation you must have the following packages.
 
 3. Gstreamer
 
-    sudo apt-get install python-gst0.10
+        sudo apt-get install python-gst0.10
 
 4. Mutagen
 
-    sudo apt-get install python-mutagen
+        sudo apt-get install python-mutagen
 
 You can install gherkin in your system or just use the python file:
 
@@ -48,14 +48,14 @@ Otherwise, you can scan your db with the following commands:
 
 1. Make files executable OR just use 'python' before the next steps commands:
 
-    sudo chmod ug+x /usr/local/ghk-server/*_db.py
+        sudo chmod ug+x /usr/local/ghk-server/*_db.py
 
 2. Scan your library:
 
-    /usr/local/ghk-server/generate_db.py /absolute_path
+        /usr/local/ghk-server/generate_db.py /absolute_path
 
 Warning: this may take a long time
 
 3. Adding other paths:
 
-    /usr/local/ghk-server/update_db.py /absolute_path
+        /usr/local/ghk-server/update_db.py /absolute_path
